@@ -38,9 +38,15 @@ class ListaPersonas:
             pickle.dump(self.personas, listadePersonas)
             listadePersonas.close()
             del(listadePersonas)
+        def  mostratInfoFicheroExterno(self):
+            print("La informacion del fichero externos es: " )
+            for p in self.personas:
+                print(p)
+
 
 
 miLista=ListaPersonas()
 
-p=Persona("Sandra", "Femenino", 29)
+p=Persona("Ana", "Femenino", 39)
 miLista.agregarPersonas(p)
+miLista.mostratInfoFicheroExterno()
