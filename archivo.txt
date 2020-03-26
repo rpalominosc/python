@@ -1,0 +1,4 @@
+Comienzo del Texto 
+Esta linea es incluida desde el exterior 
+ el miercoles
+ Buena onda el Python
