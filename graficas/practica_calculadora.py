@@ -6,6 +6,7 @@ miframe.pack()
 
 operacion=""
 resultado=0
+yatienecoma=False
 #------------------------- Pantalla ------------------------------------------
 numeroPantalla=StringVar()
 pantalla=Entry(miframe,textvariable=numeroPantalla)
@@ -16,8 +17,9 @@ pantalla.config(background="black",fg="#03f943",justify="right")
 #----------------------- Pulsaciones Teclados------------------------
 def numeroPulsado(num):
     global operacion
-
-    if operacion != "":
+    if operacion == "," and yatienecoma ==False:
+        yatienecoma=True
+    if operacion != "" :
         numeroPantalla.set(num)
         operacion=""
     else:
@@ -27,14 +29,29 @@ def numeroPulsado(num):
 def suma(num):
     global operacion
     global resultado
-    resultado+= int(num)
+    if "," in num:
+        num= num.replace("," , ".")
+        resultado+= float(num)
+        resultado=str(resultado)
+        resultado=resultado.replace(".",".")
+    else:
+        resultado+-int(num)
     operacion="suma"
     numeroPantalla.set(resultado)
 
 # -------------------Funcion el resultado-----------------------------------------
 def elresultado():
     global resultado
-    numeroPantalla.set(resultado+int(numeroPantalla.get()))
+    if "," in resultado or "," in numeroPantalla.get():
+        if "," in resultado :
+            resultado=resultado.replace("," , ".")
+            resultado=float(resultado)
+        elif "," in numeroPantalla.get():
+            cambiaptoporcoma=numeroPantalla.get().replace(",",".")
+            cambiaptoporcoma=float(cambiaptoporcoma)
+            resultado=float(resultado)
+    else:
+        numeroPantalla.set(resultado+int(numeroPantalla.get()))
     resultado=0
 #-----------------------------------------Primera linea--------------
 
