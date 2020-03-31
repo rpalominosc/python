@@ -38,7 +38,7 @@ def numeroPulsado(num):
 		reset_pantalla=False
 
 	else:
-
+	
 		numeroPantalla.set(numeroPantalla.get() + num)
 
 
@@ -93,7 +93,7 @@ def resta(num):
 
 		else:
 
-			resultado=int(resultado)-int(num)
+			resultado=int(resultado)-int(num)	
 
 		numeroPantalla.set(resultado)
 
@@ -121,11 +121,11 @@ def multiplica(num):
 	global contador_multi
 
 	global reset_pantalla
-
+	
 	if contador_multi==0:
 
 		num1=int(num)
-
+		
 		resultado=num1
 
 	else:
@@ -136,10 +136,10 @@ def multiplica(num):
 
 		else:
 
-			resultado=int(resultado)*int(num)
+			resultado=int(resultado)*int(num)	
 
 		numeroPantalla.set(resultado)
-
+		
 		resultado=numeroPantalla.get()
 
 
@@ -164,11 +164,11 @@ def divide(num):
 	global contador_divi
 
 	global reset_pantalla
-
+	
 	if contador_divi==0:
 
 		num1=float(num)
-
+		
 		resultado=num1
 
 	else:
@@ -179,10 +179,10 @@ def divide(num):
 
 		else:
 
-			resultado=float(resultado)/float(num)
+			resultado=float(resultado)/float(num)	
 
 		numeroPantalla.set(resultado)
-
+		
 		resultado=numeroPantalla.get()
 
 
@@ -207,7 +207,7 @@ def el_resultado():
 	global contador_multi
 
 	global contador_divi
-
+	
 
 	if operacion=="suma":
 
@@ -239,7 +239,7 @@ def el_resultado():
 
 		contador_divi=0
 
-
+	
 
 
 
