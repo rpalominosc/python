@@ -43,11 +43,13 @@ def limpiarcampos():
 def crear():
     miconexion=sqlite3.connect("Usuarios.db")
     micursor=miconexion.cursor()
-    micursor.execute("INSERT INTO DATOSUSUARIOS VALUES(NULL,'" + miNombre.get() +
-        "','" + miPass.get() +
-        "','" + miApellido.get() +
-        "','" + miDireccion.get() +
-        "','" + cuadrotexto.get("1.0",END) + "')")
+#    micursor.execute("INSERT INTO DATOSUSUARIOS VALUES(NULL,'" + miNombre.get() +
+#        "','" + miPass.get() +
+#        "','" + miApellido.get() +
+#        "','" + miDireccion.get() +
+#        "','" + cuadrotexto.get("1.0",END) + "')")
+    datos=miNombre.get(),miPass.get(),miApellido.get(),miDireccion.get(),cuadrotexto.get("1.0",END)
+    micursor.execute("INSERT INTO DATOSUSUARIOS VALUES(NULL,?,?,?,?,?)",(datos))
     miconexion.commit()
     messagebox.showinfo("BBDD", "Registro insertado con éxito")
 
@@ -68,15 +70,25 @@ def leer():
 def Actualizar():
     miconexion=sqlite3.connect("Usuarios.db")
     micursor=miconexion.cursor()
-    micursor.execute("UPDATE DATOSUSUARIOS SET NOMBRE_USUARIO='"+miNombre.get() +
-    "', PASSWORD='" + miPass.get() +
-    "', APELLIDO='" + miApellido.get() +
-    "', DIRECCION='" + miDireccion.get() +
-    "', COMENTARIOS='" + cuadrotexto.get("1.0",END) +
-    "' WHERE ID=" + miId.get())
-#    ")
+#    micursor.execute("UPDATE DATOSUSUARIOS SET NOMBRE_USUARIO='"+miNombre.get() +
+#    "', PASSWORD='" + miPass.get() +
+#    "', APELLIDO='" + miApellido.get() +
+#    "', DIRECCION='" + miDireccion.get() +
+#    "', COMENTARIOS='" + cuadrotexto.get("1.0",END) +
+#    "' WHERE ID=" + miId.get())
+    datos=miNombre.get(),miPass.get(),miApellido.get(),miDireccion.get(),cuadrotexto.get("1.0",END)
+    micursor.execute("UPDATE DATOSUSUARIOS SET NOMBRE_USUARIO=?,PASSWORD=?,APELLIDO=?,DIRECCION=?,COMENTARIOS=?" +
+    "WHERE ID="+miId.get(),(datos))
     miconexion.commit()
     messagebox.showinfo("BBDD", "Registro Actualizado con éxito")
+
+def eliminar():
+    miconexion=sqlite3.connect("Usuarios.db")
+    micursor=miconexion.cursor()
+    micursor.execute("DELETE FROM DATOSUSUARIOS WHERE ID="+ miId.get())
+    miconexion.commit()
+    messagebox.showinfo("BBDD", "Registro Eliminado")
+
 
 root=Tk()
 barramenu=Menu(root)
@@ -93,7 +105,7 @@ crudMenu=Menu(barramenu, tearoff=0)
 crudMenu.add_command(label="Crear", command=crear)
 crudMenu.add_command(label="Leer", command=leer)
 crudMenu.add_command(label="Actualizar", command=Actualizar)
-crudMenu.add_command(label="Borrar")
+crudMenu.add_command(label="Borrar", command=eliminar)
 
 ayudaMenu=Menu(barramenu, tearoff=0)
 ayudaMenu.add_command(label="Licencia")
@@ -157,7 +169,7 @@ botonleer=Button(frameinf,text="Leer", command=leer)
 botonleer.grid(row=1,column=1,sticky="e",padx=5,pady=6)
 botonactualiza=Button(frameinf,text="Actualizar", command=Actualizar)
 botonactualiza.grid(row=1,column=3,sticky="e",padx=5,pady=6)
-botonborrar=Button(frameinf,text="Borrar")
+botonborrar=Button(frameinf,text="Borrar", command=eliminar)
 botonborrar.grid(row=1,column=4,sticky="e",padx=5,pady=6)
 
 
