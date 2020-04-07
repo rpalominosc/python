@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 from tkinter import *
 
 raiz=Tk()
@@ -295,7 +294,7 @@ botonSum.grid(row=5, column=4)
 
 
 raiz.mainloop()
-=======
+
 from tkinter import *
 raiz=Tk()
 
@@ -395,4 +394,4 @@ botonSuma.grid(row=5, column=4)
 
 
 raiz.mainloop()
->>>>>>> 703acf09d50ee5c26026c47ac2cee1802d3e0782
+
