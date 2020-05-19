@@ -3,7 +3,7 @@ import requests, lxml
 import pandas as pd
 
 # BLOQUE DE LOGIN AL SISTEMA
-login_url ='http://geminis.si2.cl:8080/#/indices'
+login_url ='http://geminis.si2.cl:8020/auth/login'
 data = {
     'username' : '023604-S'
     'password' : 'Polux9leo.'
