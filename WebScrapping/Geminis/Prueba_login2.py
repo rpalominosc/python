@@ -6,7 +6,7 @@ USERNAME = "81534675"
 PASSWORD = "polux7leo"
 
 LOGIN_URL = "https://zeusr.sii.cl//AUT2000/InicioAutenticacion/IngresoRutClave.html?https://misiir.sii.cl/cgi_misii/siihome.cgi"
-URL = "http://www.sii.cl/servicios_online/1040-1287.html#-collapseOne"
+URL = "https://loa.sii.cl/cgi_IMT/TMBCOC_MenuConsultasContrib.cgi?dummy=1461943167534"
 
 def main():
     session_requests = requests.session()
@@ -36,9 +36,9 @@ def main():
     else:
         print("not OK")
     print(bs)
-    bucket_names = tree.xpath("//div[@class='repo-list--repo']/a/text()")
 
-    print(bucket_names)
+    #bucket_names = tree.xpath("//div[@class='modal-body']/a/text()")
+    #print(bucket_names)
 
 if __name__ == '__main__':
     main()
