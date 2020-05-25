@@ -1,22 +1,30 @@
 import requests
+import requests.auth
+import urllib
 from bs4 import BeautifulSoup
 from lxml import html
+from oauthlib.oauth2 import LegacyApplicationClient
+from oauthlib.oauth2 import BackendApplicationClient
+from requests_oauthlib import OAuth2Session
 
 USERNAME = "023604-S"
 PASSWORD = "Polux9leo."
+client_id = 'SampleClientId'
+client_secret = 'secret'
 
+authorize_url = 'http://geminis.si2.cl:8020/auth/oauth/authorize'
+token_url = 'http://geminis.si2.cl:8020/auth/oauth/token '
 LOGIN_URL = "http://geminis.si2.cl:8020/auth/login"
-URL = "http://geminis.si2.cl:8080/#/indices"
+URL_LLAMADA = "http://geminis.si2.cl:8080/#/indices"
 
 def main():
     session_requests = requests.session()
 
-    # Get login csrf token
-    result = session_requests.get(LOGIN_URL)
+    # Obtencion  login csrf token
+    oauth = OAuth2Session(client = LegacyApplicationClient(client_id=client_id))
+    token = oauth.fetch_token(token_url='http://geminis.si2.cl:8020/auth/oauth/token', username=USERNAME, password=PASSWORD, client_id=client_id,client_secret=client_secret)
+    result = session_requests.get(URL_LLAMADA)
     print(result)
-    tree = html.fromstring(result.text)
-    print(tree)
-    #authenticity_token = list(set(tree.xpath("//input[@name='csrfmiddlewaretoken']/@value")))[0]
 
     # Create payload
     payload = {
