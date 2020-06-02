@@ -1,0 +1,27 @@
+<html>
+    <body>
+    <h1>
+    Hola Alienigenas, esta es la  página creada con Django usando plantillas
+    </h1>
+    <h2 style="color: blue">
+    <p> {{nombre_persona}} {{apellido_persona}} hasta aqui, todo esta resultando bien en este curso </p>
+    <p> Este es el momento en que vivimos {{Hora_actual.day}} </p>
+    <p> La lista {{Temas}} </p>
+    </h2>
+
+    <h2 style="color: orange">
+    {% if Temas %}
+      <p><strong> Temas del curso </strong></p>
+
+      <p>
+        <ul>
+        {% for  elTema in Temas %}
+          <li>{{elTema}}</li>
+        {% endfor %}
+      </ul>
+       </p>
+    {% endif %}
+    </h2>
+
+    </body>
+  </html>
