@@ -1,10 +1,21 @@
 <html>
     <body>
+    {% include "barra.html" %}  
+
     <h1>
     Hola Alienigenas, esta es la  página creada con Django usando plantillas
     </h1>
+
+    {# Prueba Comentario estructura IF #}
+
+    {% if nombre_persona == 'Claudia' %}
+      <p> El curso lo dicta el Master, Guru </p>
+    {% else %}
+      <p> El curso lo dicta el profesor suplente </p>
+    {% endif %}
+
     <h2 style="color: blue">
-    <p> {{nombre_persona}} {{apellido_persona}} hasta aqui, todo esta resultando bien en este curso </p>
+    <p> {{nombre_persona}} {{apellido_persona.upper}} hasta aqui, todo esta resultando bien en este curso </p>
     <p> Este es el momento en que vivimos {{Hora_actual.day}} </p>
     <p> La lista {{Temas}} </p>
     </h2>
