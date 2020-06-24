@@ -1,5 +1,7 @@
 from django.db import models
 
+#from .rut import verifica_rut
+
 # Create your models here.
 
 #       TABLAS SECCION 1
@@ -33,14 +35,22 @@ eleccion_sexo = [
     ('F', 'Femenino'),
     ('O', 'Otro'),
     ]
-class Persona(models.Model):
-    idPersona=models.IntegerField(primary_key=True)
+# eleccion_nacionalidad = [ 'Chilena', 'Argentina','Venezolana','Colombiana','Peruana','Boliviana',]
+class Propietario(models.Model):
+    #idPersona=models.CharField('Rut',max_length=10,primary_key=True, validators=[verifica_rut])
+    idPersona=models.CharField('Rut',max_length=10,primary_key=True, help_text="Entre RUT en formato 99999999-X")
     sexo=models.CharField(max_length=1, choices=eleccion_sexo)
     nombres=models.CharField(max_length=45)
     apellido_Paterno=models.CharField(max_length=45)
     apellido_Materno=models.CharField(max_length=45)
+    telefono=models.IntegerField()
+    correo=models.EmailField()
     nacionalidad=models.CharField(max_length=45)
-    fecha_Nacimiento=models.DateField()
+    fecha_Nacimiento=models.DateField(blank=True, null=True)
+
+    def  __str__(self):
+        nombreProp=self.nombres+" "+ self.apellido_Paterno
+        return (nombreProp)
 
 #    def  __str__(self):
 #        return (self.nombres, self.apellido_Paterno,self.apellido_Materno,self.fecha_Nacimiento,)
@@ -51,15 +61,24 @@ class Perfil(models.Model):
     nivel=models.IntegerField()
 
 class Usuario(models.Model):
-    idUsuario=models.IntegerField(unique=True)
-    idPerfil=models.ForeignKey('Perfil',on_delete=models.CASCADE)
-    idPersona=models.ForeignKey('Persona',on_delete=models.CASCADE)
-    idCondominio=models.ForeignKey('Condominio',on_delete=models.CASCADE)
+    idUsuario=models.CharField('Rut Usuario',max_length=10,help_text="Entre RUT en formato 99999999-X")
+    #idPerfil=models.ForeignKey('Perfil',on_delete=models.CASCADE)
+    id_Propietario=models.ForeignKey('Propietario',on_delete=models.CASCADE)
+    nombres=models.CharField(max_length=45)
+    apellido_Paterno=models.CharField(max_length=45)
+    telefono=models.IntegerField()
+    correo=models.EmailField()
+    nacionalidad=models.CharField(max_length=45)
+    # idCondominio=models.ForeignKey('Condominio',on_delete=models.CASCADE)
     estado_Usuario=models.BooleanField()
-    contrasenia=models.CharField(max_length=100)
+    contrasenia=models.CharField('Contraseña',max_length=100)
     fecha_Creacion=models.DateField(auto_now_add=True)
     fecha_Modificacion=models.DateField()
-    fecha_Eliminacion=models.DateField()
+    fecha_Eliminacion=models.DateField(null=True,blank=True)
+
+    def  __str__(self):
+        nombreUsuario=self.nombres+"  "+ self.apellido_Paterno
+        return (nombreUsuario)
 
 #       TABLAS SECCION 3
 
@@ -84,7 +103,7 @@ class DetalleCuentaCondominio(models.Model):
     descripcion=models.CharField(max_length=255)
     fecha_Creacion=models.DateField()
     fecha_Modificacion=models.DateField()
-    fecha_Eliminacion=models.DateField()
+    fecha_Eliminacion=models.DateField(blank=True, null=True)
 
 
 
@@ -127,14 +146,14 @@ class DetalleGastoComun(models.Model):
     descripcion=models.CharField(max_length=100)
     fecha_Creacion=models.DateField()
     fecha_Modificacion=models.DateField()
-    fecha_Eliminacion=models.DateField()
+    fecha_Eliminacion=models.DateField(blank=True, null=True)
 
 class Documento(models.Model):
     idDocumento=models.IntegerField()
     ubicacion=models.CharField(max_length=1000)
     observacion=models.CharField(max_length=255)
     fecha_Creacion=models.DateField()
-    fecha_Eliminacion=models.DateField()
+    fecha_Eliminacion=models.DateField(blank=True, null=True)
 
 class DetalleDocumento(models.Model):
     idDetalleDocumento=models.IntegerField(unique=True)
@@ -146,10 +165,14 @@ class DetalleDocumento(models.Model):
 
 class Vivienda(models.Model):
     idVivienda=models.IntegerField(unique=True)
-    idCondominio=models.ForeignKey('Condominio',on_delete=models.CASCADE)
-    codigoVivienda=models.CharField(max_length=10)
+    #idCondominio=models.ForeignKey('Condominio',on_delete=models.CASCADE)
+    codigoVivienda=models.CharField(max_length=12)
     piso=models.IntegerField()
-    numero=models.IntegerField()
+    torre=models.CharField(max_length=1)
+
+    def  __str__(self):
+        nombreProp="Torre "+self.torre+" - Dp."+ str(self.idVivienda)
+        return (nombreProp)
 
 class ViviendaUsuario(models.Model):
     idUsuario=models.ForeignKey('Usuario',on_delete=models.CASCADE)
@@ -157,7 +180,7 @@ class ViviendaUsuario(models.Model):
     observacion=models.CharField(max_length=255)
     fecha_Creacion=models.DateField()
     fecha_Modificacion=models.DateField()
-    fecha_Eliminacion=models.DateField()
+    fecha_Eliminacion=models.DateField(blank=True, null=True)
 
 class CuentaVivienda(models.Model):
     idCuentaVivienda=models.IntegerField(unique=True)
@@ -167,7 +190,7 @@ class CuentaVivienda(models.Model):
     factor_Alicuota=models.FloatField()
     fecha_Creacion=models.DateField()
     fecha_Modificacion=models.DateField()
-    fecha_Eliminacion=models.DateField()
+    fecha_Eliminacion=models.DateField(blank=True, null=True)
 
 class medioPago(models.Model):
     idmediopago=models.IntegerField(unique=True)
@@ -187,7 +210,7 @@ class PagoCuentaVivienda(models.Model):
     monto=models.IntegerField()
     fecha_Creacion=models.DateField()
     fecha_Modificacion=models.DateField()
-    fecha_Eliminacion=models.DateField()
+    fecha_Eliminacion=models.DateField(blank=True, null=True)
 
 class GastoComunCuentaVivienda(models.Model):
     idCalendario=models.ForeignKey('Calendario',on_delete=models.CASCADE)
@@ -195,7 +218,7 @@ class GastoComunCuentaVivienda(models.Model):
     monto=models.IntegerField()
     fecha_Creacion=models.DateField()
     fecha_Modificacion=models.DateField()
-    fecha_Eliminacion=models.DateField()
+    fecha_Eliminacion=models.DateField(blank=True, null=True)
 
 class InteresCuentaVivienda(models.Model):
     idInteres=models.IntegerField(unique=True)
@@ -207,7 +230,7 @@ class InteresCuentaVivienda(models.Model):
     factorInteres=models.FloatField()
     fecha_Creacion=models.DateField()
     fecha_Modificacion=models.DateField()
-    fecha_Eliminacion=models.DateField()
+    fecha_Eliminacion=models.DateField(blank=True, null=True)
 
 
 
@@ -224,7 +247,7 @@ class Proveedor(models.Model):
     direccion=models.CharField(max_length=255)
     fecha_Creacion=models.DateField()
     fecha_Modificacion=models.DateField()
-    fecha_Eliminacion=models.DateField()
+    fecha_Eliminacion=models.DateField(blank=True, null=True)
 
 class Producto(models.Model):
     idProducto=models.IntegerField()
@@ -234,7 +257,7 @@ class Producto(models.Model):
     descripcion=models.CharField(max_length=255)
     fecha_Creacion=models.DateField()
     fecha_Modificacion=models.DateField()
-    fecha_Eliminacion=models.DateField()
+    fecha_Eliminacion=models.DateField(blank=True, null=True)
 
 
 class DetalleExistencia(models.Model):
@@ -245,4 +268,4 @@ class DetalleExistencia(models.Model):
     observacion=models.CharField(max_length=255)
     fecha_Creacion=models.DateField()
     fecha_Modificacion=models.DateField()
-    fecha_Eliminacion=models.DateField()
+    fecha_Eliminacion=models.DateField(blank=True, null=True)
