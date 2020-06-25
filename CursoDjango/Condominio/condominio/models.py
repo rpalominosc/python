@@ -64,6 +64,7 @@ class Usuario(models.Model):
     idUsuario=models.CharField('Rut Usuario',max_length=10,help_text="Entre RUT en formato 99999999-X")
     #idPerfil=models.ForeignKey('Perfil',on_delete=models.CASCADE)
     id_Propietario=models.ForeignKey('Propietario',on_delete=models.CASCADE)
+    idVivienda=models.ForeignKey('Vivienda',on_delete=models.CASCADE)
     nombres=models.CharField(max_length=45)
     apellido_Paterno=models.CharField(max_length=45)
     telefono=models.IntegerField()
@@ -99,8 +100,8 @@ class DetalleCuentaCondominio(models.Model):
     fecha=models.DateField()
     asunto=models.IntegerField()
     monto=models.IntegerField()
-    codigo_Referencia=models.IntegerField()
-    descripcion=models.CharField(max_length=255)
+    codigo_Referencia=models.IntegerField(blank=True, null=True)
+    descripcion=models.CharField(max_length=255,blank=True, null=True)
     fecha_Creacion=models.DateField()
     fecha_Modificacion=models.DateField()
     fecha_Eliminacion=models.DateField(blank=True, null=True)
@@ -111,21 +112,35 @@ class DetalleCuentaCondominio(models.Model):
 
 class CategoriaGastoComun(models.Model):
     idCategoria=models.IntegerField(unique=True)
-    Descripción_Categoria=models.CharField(max_length=255)
+    Descripcion_Categoria=models.CharField(max_length=255)
+
+    def  __str__(self):
+        Desc_Categoria=self.Descripcion_Categoria
+        return (Desc_Categoria)
 
 class SubcategoriaGastoComun(models.Model):
     idSubcategoria=models.IntegerField(unique=True)
-    Descripción_Subcategoria=models.CharField(max_length=255)
+    idCategoria=models.ForeignKey('CategoriaGastoComun',on_delete=models.CASCADE)
+    Descripcion_Subcategoria=models.CharField(max_length=255)
+
+    def  __str__(self):
+        Desc_SubCategoria=self.Descripcion_Subcategoria
+        return (Desc_SubCategoria)
 
 class Calendario(models.Model):
     idCalendario=models.IntegerField(unique=True)
-    mes=models.IntegerField()
+    mes=models.CharField(max_length=11)
     ano=models.IntegerField()
+
+    def  __str__(self):
+        Desc_Calendario=self.mes+' '+str(self.ano)
+        return (Desc_Calendario)
 
 class GastoComun(models.Model):
     idGastoComun=models.IntegerField(unique=True)
     idCalendario=models.ForeignKey('Calendario',on_delete=models.CASCADE )
-    idCondominio=models.ForeignKey('Condominio',on_delete=models.CASCADE )
+    idSubCategoria=models.ForeignKey('SubCategoriaGastoComun',on_delete=models.CASCADE)
+    #idCondominio=models.ForeignKey('Condominio',on_delete=models.CASCADE )
     estado=models.BooleanField()
     montoTotal=models.IntegerField()
     fecha_InicioCancelacion=models.DateField()
@@ -139,21 +154,37 @@ class DetalleGastoComun(models.Model):
     idGastoComun=models.ForeignKey('GastoComun',on_delete=models.CASCADE )
     idCategoria=models.ForeignKey('CategoriaGastoComun',on_delete=models.CASCADE )
     idSubCategoria=models.ForeignKey('SubcategoriaGastoComun',on_delete=models.CASCADE )
-    cuotanumero=models.IntegerField()
-    totalcuotas=models.IntegerField()
-    tipoOperacion=models.CharField(max_length=1)
+    cuotanumero=models.IntegerField(blank=True, null=True)
+    totalcuotas=models.IntegerField(blank=True, null=True)
+    tipoOperacion=models.CharField(max_length=1,blank=True, null=True)
     monto=models.IntegerField()
     descripcion=models.CharField(max_length=100)
-    fecha_Creacion=models.DateField()
-    fecha_Modificacion=models.DateField()
+    fecha_Creacion=models.DateField(null=True)
+    fecha_Modificacion=models.DateField(null=True)
     fecha_Eliminacion=models.DateField(blank=True, null=True)
+
+eleccion_documento = [
+    ('F', 'Factura'),
+    ('B', 'Boleta'),
+    ('H', 'Boleta Honorarios'),
+    ('C', 'Comprobante Caja Chica'),
+    ]
 
 class Documento(models.Model):
     idDocumento=models.IntegerField()
-    ubicacion=models.CharField(max_length=1000)
+    tipoDoc=models.CharField(max_length=1000,choices=eleccion_documento)
+    numerodoc=models.IntegerField()
+    montoTotal=models.IntegerField()
+    fecha_Vencimiento=models.DateField(null=True)
+    idCalendario=models.ForeignKey('Calendario',on_delete=models.CASCADE)
     observacion=models.CharField(max_length=255)
-    fecha_Creacion=models.DateField()
-    fecha_Eliminacion=models.DateField(blank=True, null=True)
+    fecha_Emision=models.DateField(null=True)
+    fecha_Creacion=models.DateField(auto_now_add=True)
+
+
+    def  __str__(self):
+        nombredoc=self.tipoDoc
+        return (nombredoc)
 
 class DetalleDocumento(models.Model):
     idDetalleDocumento=models.IntegerField(unique=True)
