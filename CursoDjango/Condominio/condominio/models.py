@@ -167,12 +167,15 @@ eleccion_documento = [
     ('F', 'Factura'),
     ('B', 'Boleta'),
     ('H', 'Boleta Honorarios'),
-    ('C', 'Comprobante Caja Chica'),
+    ('CC', 'Comprobante Caja Chica'),
+    ('CT', 'Comprobante Transferencia'),
+    ('CT', 'Comprobante Deposito'),
+    ('CT', 'Comprobante Pago en Efectivo'),
     ]
 
 class Documento(models.Model):
     idDocumento=models.IntegerField()
-    tipoDoc=models.CharField(max_length=1000,choices=eleccion_documento)
+    tipoDoc=models.CharField(max_length=10,choices=eleccion_documento)
     numerodoc=models.IntegerField()
     montoTotal=models.IntegerField()
     fecha_Vencimiento=models.DateField(null=True)
