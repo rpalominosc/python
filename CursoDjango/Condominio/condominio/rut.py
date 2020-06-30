@@ -4,6 +4,7 @@ import os, sys
 from django.core.exceptions import ValidationError
 #git clone https://github.com/dpineiden/number2name
 #from number2name_es.nombre_numero import Nombre_Numero
+#alteracion voluntaria de archivo
 
 class RutChile:
 	def __init__(self, ver_rut):
