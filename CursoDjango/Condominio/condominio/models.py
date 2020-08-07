@@ -169,7 +169,7 @@ eleccion_documento = [
     ('H', 'Boleta Honorarios'),
     ('CC', 'Comprobante Caja Chica'),
     ('CT', 'Comprobante Transferencia'),
-    ('CT', 'Comprobante Deposito'),
+    ('CT', 'Comprobante Depósito'),
     ('CT', 'Comprobante Pago en Efectivo'),
     ]
 

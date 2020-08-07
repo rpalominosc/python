@@ -15,6 +15,7 @@ class SubCategoriaGastoComunAdmin(admin.ModelAdmin):
     list_display = ('idSubcategoria','Descripcion_Subcategoria','idCategoria')
     list_filter=('idCategoria',)
     ordering = ('idSubcategoria',)
+    
 
 class DocumentoAdmin(admin.ModelAdmin):
     fieldsets = (
