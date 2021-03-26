@@ -52,34 +52,9 @@ def Actualizar():
     "WHERE Id="+miId.get(),(datos))
     miconexion.commit()
     messagebox.showinfo("BBDD", "Registro Actualizado con éxito")
-def Grabar():
-    #miconexion=mysql.connector.connect(host='localhost', user='root', passwd='root',database='cua')
-    micursor=miconexion.cursor()
-    micursor.execute("INSERT INTO departamentos_cua VALUES(null,%s,%s,%s,%s,%s,%s)",(datos))
-    miconexion.commit()
-    messagebox.showinfo("BBDD", "Registro insertado con éxito")
 
-def crear():
-    datos=miId.get(),miGrado.get(),miNombre.get(),miCodigo_func.get(),miDepartamento.get(),miCua.get(),miStatus.get()
-    botoncrear=Button(frameinf,text="Grabar",command=Grabar)
-    botoncrear.grid(row=1,column=0,sticky="e",padx=5,pady=6)
-    miconexion=mysql.connector.connect(host='localhost', user='root', passwd='root',database='cua')
-    micursor=miconexion.cursor()
-#------Combobox para Departamento -------------------    
-    micursor.execute("SELECT * FROM departamentos_reg " )
-    departamentos=micursor.fetchall()
-    lista=[]
-    for indice,item in departamentos:
-        lista.append(str(item))
-    
-    combodepartamento=Combobox(miframe, width=150)
-    combodepartamento.grid(row=3,column=1, padx=10, pady=7, sticky="w")
-    combodepartamento["values"]=lista
-    combodepartamento.config(justify="left",width=40)
-    #datos=miGrado.get(),miNombre.get(),miCodigo_func.get(),miDepartamento.get(),miCua.get(),miStatus.get()
-    datos=miId.get(),miGrado.get(),miNombre.get(),miCodigo_func.get(),combodepartamento.get(),miCua.get(),miStatus.get()
-    
 
+   
 
 ## -------------  Comienza Ejecucion---------------
 
@@ -182,7 +157,41 @@ botonactualiza.grid(row=1,column=3,sticky="e",padx=5,pady=6)
 botonborrar=Button(frameinf,text="Limpiar", command=limpiarcampos)
 botonborrar.grid(row=1,column=4,sticky="e",padx=5,pady=6)
 
+class Crear:
+    def __init__(self, ventana_padre,):
+        super().__init__()
 
+        self.top=Toplevel(ventana_padre)
+        self.top.transient(ventana_padre)
+        self.top.grab_set()
+        
+        
+    def crear():
+        def Grabar(datos):
+        micursor=miconexion.cursor()
+        miId.set(micursor.lastrowid)
+        micursor.execute("INSERT INTO departamentos_cua VALUES(%s,%s,%s,%s,%s,%s,%s)",(datos))
+        miconexion.commit()
+        messagebox.showinfo("BBDD", "Registro insertado con éxito")
+    
+    #------Combobox para Departamento -------------------  
+    miconexion=mysql.connector.connect(host='localhost', user='root', passwd='root',database='cua')
+    micursor=miconexion.cursor() 
+    micursor.execute("SELECT * FROM departamentos_reg " )
+    departamentos=micursor.fetchall()
+    lista=[]
+    for indice,item in departamentos:
+        lista.append(str(item))
+    
+    combodepartamento=Combobox(miframe, width=150)
+    combodepartamento.grid(row=3,column=1, padx=10, pady=7, sticky="w")
+    combodepartamento["values"]=lista
+    combodepartamento.config(justify="left",width=40)
+    #datos=miGrado.get(),miNombre.get(),miCodigo_func.get(),miDepartamento.get(),miCua.get(),miStatus.get()
+    datos=miId.get(),miGrado.get(),miNombre.get(),miCodigo_func.get(),combodepartamento.get(),miCua.get(),miStatus.get()
+    botoncrear=Button(frameinf,text="Grabar",command=Grabar(datos))
+    botoncrear.grid(row=1,column=0,sticky="e",padx=5,pady=6)
+#-------Fin Combobox Departamento    
 
 
 
