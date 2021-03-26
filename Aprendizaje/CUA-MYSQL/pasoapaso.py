@@ -165,14 +165,16 @@ class Crear:
         self.top.transient(ventana_padre)
         self.top.grab_set()
         
-        
-    def crear():
-        def Grabar(datos):
+
+    def Grabar(datos):
         micursor=miconexion.cursor()
         miId.set(micursor.lastrowid)
         micursor.execute("INSERT INTO departamentos_cua VALUES(%s,%s,%s,%s,%s,%s,%s)",(datos))
         miconexion.commit()
         messagebox.showinfo("BBDD", "Registro insertado con éxito")
+
+    def cierra_ventana(self, event=None):
+        self.top.destroy()
     
     #------Combobox para Departamento -------------------  
     miconexion=mysql.connector.connect(host='localhost', user='root', passwd='root',database='cua')
@@ -191,7 +193,7 @@ class Crear:
     datos=miId.get(),miGrado.get(),miNombre.get(),miCodigo_func.get(),combodepartamento.get(),miCua.get(),miStatus.get()
     botoncrear=Button(frameinf,text="Grabar",command=Grabar(datos))
     botoncrear.grid(row=1,column=0,sticky="e",padx=5,pady=6)
-#-------Fin Combobox Departamento    
+    #-------Fin Combobox Departamento    
 
 
 
