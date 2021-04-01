@@ -56,9 +56,48 @@ class CreaVentana():
             miconexion.commit()
             messagebox.showinfo("BBDD", "Registro Actualizado con éxito")
 
+        def ComboVentanaGrado():
+            #------Combobox para Departamento -------------------  
+            miconexion=mysql.connector.connect(host='localhost', user='root', passwd='root',database='cua')
+            micursor=miconexion.cursor() 
+            micursor.execute("SELECT * FROM grados" )
+            grados=micursor.fetchall()
+            lista1=[]
+            for indice1,item1 in grados:
+                lista1.append(str(item1))
+        
+            combogrado=Combobox(miframe, width=20)
+            combogrado.grid(row=1,column=1, padx=10, pady=7, sticky="w")
+            combogrado["values"]=lista1
+            combogrado.config(justify="left",width=40)
+            #datos=miGrado.get(),miNombre.get(),miCodigo_func.get(),miDepartamento.get(),miCua.get(),miStatus.get()
+            #datos=miId.get(),miGrado.get(),miNombre.get(),miCodigo_func.get(),combodepartamento.get(),miCua.get(),miStatus.get()
+            botoncrear=Button(frameinf,text="Grabar")
+            botoncrear.grid(row=1,column=0,sticky="e",padx=5,pady=6)
+            #-------Fin Combobox Departamento 
+        def ComboVentanaDepto():
+            #------Combobox para amento -------------------  
+            miconexion=mysql.connector.connect(host='localhost', user='root', passwd='root',database='cua')
+            micursor=miconexion.cursor() 
+            micursor.execute("SELECT * FROM departamentos_reg " )
+            departamentos=micursor.fetchall()
+            lista=[]
+            for indice,item in departamentos:
+                lista.append(str(item))
+        
+            combodepartamento=Combobox(miframe, width=150)
+            combodepartamento.grid(row=3,column=1, padx=10, pady=7, sticky="w")
+            combodepartamento["values"]=lista
+            combodepartamento.config(justify="left",width=40)
+            #datos=miGrado.get(),miNombre.get(),miCodigo_func.get(),miDepartamento.get(),miCua.get(),miStatus.get()
+            #datos=miId.get(),miGrado.get(),miNombre.get(),miCodigo_func.get(),combodepartamento.get(),miCua.get(),miStatus.get()
+            botoncrear=Button(frameinf,text="Grabar")
+            botoncrear.grid(row=1,column=0,sticky="e",padx=5,pady=6)
+            #-------Fin Combobox Departamento      
+               
         def BotonCrear():
-            pass
-
+            ComboVentanaDepto()
+            ComboVentanaGrado()
 
         #--------------Pantalla Base------------------
         principal=Tk()
@@ -78,7 +117,7 @@ class CreaVentana():
         borrarMenu.add_command(label="Limpiar contenido", command=limpiarcampos)
 
         crudMenu=Menu(barramenu, tearoff=0)
-        crudMenu.add_command(label="Crear" )
+        crudMenu.add_command(label="Crear", command=BotonCrear )
         crudMenu.add_command(label="Leer", command=leer)
         crudMenu.add_command(label="Actualizar", command=Actualizar)
         crudMenu.add_command(label="Limpiar", command=limpiarcampos)
