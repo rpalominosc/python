@@ -3,6 +3,11 @@ from tkinter.ttk import *
 from tkinter import messagebox
 import mysql.connector
 
+DB_HOST='localhost'
+DB_USER='root'
+DB_PASS='root'
+DB_NAME='cua'
+
 class CreaVentana():
 
     #---------------- Inicializa variables para manipular los campos de la BD
@@ -11,7 +16,24 @@ class CreaVentana():
     
 
     def DibujaPantalla(self):
-        
+        def run_query(query=''): 
+            datos = [DB_HOST, DB_USER, DB_PASS, DB_NAME] 
+                       
+            conn = mysql.connector.connect(host=DB_HOST,user=DB_USER,password=DB_PASS,database=DB_NAME) # Conectar a la base de datos 
+            cursor = conn.cursor()         # Crear un cursor 
+            cursor.execute(query)          # Ejecutar una consulta 
+
+            if query.upper().startswith('SELECT'): 
+                data = cursor.fetchall()   # Traer los resultados de un select 
+            else: 
+                conn.commit()              # Hacer efectiva la escritura de datos 
+                data = None 
+            
+            cursor.close()                 # Cerrar el cursor 
+            conn.close()                   # Cerrar la conexión 
+
+            return data
+
         def salirPrograma():
             valor=messagebox.askquestion("Salir", "Desea salir de la aplicacion?")
             if valor=="yes":
@@ -30,11 +52,12 @@ class CreaVentana():
             
         #------------------------Leer Departamentos -----------------------
         def leer():
-        
-            miconexion=mysql.connector.connect(host='localhost', user='root', passwd='root',database='cua')
-            micursor=miconexion.cursor()
-            micursor.execute("SELECT * FROM departamentos_cua WHERE codigo_fun=" +self.miCodigo_func.get())
-            elusuario=micursor.fetchall()
+            sql="SELECT * FROM departamentos_cua WHERE codigo_fun=" +self.miCodigo_func.get()
+        #    miconexion=mysql.connector.connect(host='localhost', user='root', passwd='root',database='cua')
+        #    micursor=miconexion.cursor()
+        #    micursor.execute("SELECT * FROM departamentos_cua WHERE codigo_fun=" +self.miCodigo_func.get())
+        #    elusuario=micursor.fetchall()
+            elusuario=run_query(sql)
             for usuario in elusuario:
                 self.miId.set(usuario[0])
                 self.miGrado.set(usuario[1])
@@ -44,20 +67,48 @@ class CreaVentana():
                 self.miCua.set(usuario[5])
                 self.miStatus.set(usuario[6])
                 
-            miconexion.commit()
+        #    miconexion.close()
             
             
         def Actualizar():
-            miconexion=mysql.connector.connect(host='localhost', user='root', passwd='root',database='cua')
-            micursor=miconexion.cursor()
+            #miconexion=mysql.connector.connect(host='localhost', user='root', passwd='root',database='cua')
+            #micursor=miconexion.cursor()
             datos=self.miId.get(),self.miGrado.get(),self.miNombre.get(),self.miCodigo_func.get(),self.miDepartamento.get(),self.miCua.get(),self.miStatus.get()
-            micursor.execute("UPDATE departamentos_cua SET Id=%s,grado=%s,apellido_nombre=%s,codigo_fun=%s,departamento=%s,cua=%s,estado=%s"+ 
-            "WHERE Id="+self.miId.get(),(datos))
-            miconexion.commit()
+            #micursor.execute("UPDATE departamentos_cua SET Id=%s,grado=%s,apellido_nombre=%s,codigo_fun=%s,departamento=%s,cua=%s,estado=%s"+ 
+            #"WHERE Id="+self.miId.get(),(datos))
+            sql="UPDATE departamentos_cua SET Id=%s,grado=%s,apellido_nombre=%s,codigo_fun=%s,departamento=%s,cua=%s,estado=%s"+"WHERE Id="+self.miId.get(),(datos)
+            actualizando=run_query(sql)
+            #miconexion.commit()
             messagebox.showinfo("BBDD", "Registro Actualizado con éxito")
 
+        def Grabar():
+            miconexion=mysql.connector.connect(host='localhost', user='root', passwd='root',database='cua')
+            micursor=miconexion.cursor()
+            codigo=self.miCodigo_func.get()
+            sql="SELECT * FROM departamentos_cua WHERE codigo_fun = %s"
+            micursor.execute=(sql,codigo)
+            existe=micursor.fetchone()
+            return(existe)
+
+            #while True:
+            #    sql="""SELECT * FROM departamentos_cua WHERE codigo_fun=%s"""
+            #    micursor.execute=(sql,codigo)
+            #    
+            #    print(existe())
+            #    try:
+            #        if len(existe)==0:  
+            #            return False  
+            ##    except:
+            #        valor=messagebox.askquestion("ERROR INGRESO", "Codigo Funcionario ya existe") 
+            #        self.miCodigo_func.set("")
+            #        cuadroCodigofunc=Entry(miframe, textvariable=self.miCodigo_func)
+            #        cuadroCodigofunc.grid(row=0,column=1, padx=10, pady=7, sticky="w")   
+
+                
+                
+            
         def ComboVentanaGrado():
-            #------Combobox para Departamento -------------------  
+            #------Combobox para Grado -------------------  
             miconexion=mysql.connector.connect(host='localhost', user='root', passwd='root',database='cua')
             micursor=miconexion.cursor() 
             micursor.execute("SELECT * FROM grados" )
@@ -70,11 +121,9 @@ class CreaVentana():
             combogrado.grid(row=1,column=1, padx=10, pady=7, sticky="w")
             combogrado["values"]=lista1
             combogrado.config(justify="left",width=40)
-            #datos=miGrado.get(),miNombre.get(),miCodigo_func.get(),miDepartamento.get(),miCua.get(),miStatus.get()
-            #datos=miId.get(),miGrado.get(),miNombre.get(),miCodigo_func.get(),combodepartamento.get(),miCua.get(),miStatus.get()
-            botoncrear=Button(frameinf,text="Grabar")
-            botoncrear.grid(row=1,column=0,sticky="e",padx=5,pady=6)
-            #-------Fin Combobox Departamento 
+                     
+            #-------Fin Combobox Grado
+
         def ComboVentanaDepto():
             #------Combobox para amento -------------------  
             miconexion=mysql.connector.connect(host='localhost', user='root', passwd='root',database='cua')
@@ -91,13 +140,14 @@ class CreaVentana():
             combodepartamento.config(justify="left",width=40)
             #datos=miGrado.get(),miNombre.get(),miCodigo_func.get(),miDepartamento.get(),miCua.get(),miStatus.get()
             #datos=miId.get(),miGrado.get(),miNombre.get(),miCodigo_func.get(),combodepartamento.get(),miCua.get(),miStatus.get()
-            botoncrear=Button(frameinf,text="Grabar")
+            botoncrear=Button(frameinf,text="Grabar", command=Grabar)
             botoncrear.grid(row=1,column=0,sticky="e",padx=5,pady=6)
             #-------Fin Combobox Departamento      
-               
+
+
         def BotonCrear():
-            ComboVentanaDepto()
             ComboVentanaGrado()
+            ComboVentanaDepto()
 
         #--------------Pantalla Base------------------
         principal=Tk()
