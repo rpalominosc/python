@@ -31,7 +31,7 @@ class CreaVentana():
         #------------------------Leer Departamentos -----------------------
         def leer():
         
-            miconexion=mysql.connector.connect(host='localhost', user='root', passwd='root',database='cua')
+            miconexion=mysql.connector.connect(host='localhost',user='root', passwd='root',database='cua')
             micursor=miconexion.cursor()
             micursor.execute("SELECT * FROM departamentos_cua WHERE codigo_fun=" +self.miCodigo_func.get())
             elusuario=micursor.fetchall()
@@ -39,7 +39,6 @@ class CreaVentana():
                 self.miId.set(usuario[0])
                 self.miGrado.set(usuario[1])
                 self.miNombre.set(usuario[2])
-                self.miCodigo_func.set(usuario[3])
                 self.miDepartamento.set(usuario[4])
                 self.miCua.set(usuario[5])
                 self.miStatus.set(usuario[6])
