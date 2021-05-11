@@ -24,14 +24,14 @@ class CreaVentana():
         #--------------Pantalla Base------------------
         #principal=tk.Tk()
         self.principal.title("Administración C.U.A")
-        barramenu=tk.Menu(self.principal)
-        self.principal.config(menu=barramenu, width=400,height=200)
+        #barramenu=tk.Menu(self.principal)
+        #self.principal.config(menu=barramenu, width=400,height=200)
         self.principal.resizable(False,False)
-        self.principal.config(bg="grey")
+        self.principal.config(bg="lightgrey")
     #-----------------Segundo frame despliegue de Campos -------------------
-        miframe=ttk.Frame(self.principal)
+        miframe=tk.Frame(self.principal)
+        miframe.config(width=480,height=300)
         miframe.pack()
-        miframe.config(width="2400",height="350")
     #-----------------Genera  los rotulos de texto----------
         apellido=ttk.Label(miframe,text="Cod Funcionario: ")
         apellido.grid(row=0,column=0, sticky="e", padx=10,pady=7)
@@ -63,20 +63,20 @@ class CreaVentana():
         cuadrostatus.grid(row=5,column=1, padx=10, pady=7, sticky="w")
     #--------------- 3er Frame Genera el Area Botones-----------------------
         frameinf=tk.Frame(self.principal)
+        frameinf.config(width=580,height=300)
         frameinf.pack()
-        frameinf.config(width="2400",height="350")
-
-        botoncrear=ttk.Button(frameinf,text="Crear", command=self.Crear) 
-        botoncrear.grid(row=1,column=0,sticky="e",padx=5,pady=6)
-        botonleer=ttk.Button(frameinf,text="Leer", command=self.leer) 
-        botonleer.grid(row=1,column=1,sticky="e",padx=5,pady=6)
-        botonactualiza=ttk.Button(frameinf,text="Actualizar", command=self.actualizar) 
-        botonactualiza.grid(row=1,column=3,sticky="e",padx=5,pady=6)
-        botonborrar=ttk.Button(frameinf,text="Limpiar", command=self.limpiarcampos) 
-        botonborrar.grid(row=1,column=4,sticky="e",padx=5,pady=6)
-        botonsalir=ttk.Button(frameinf,text="Salir", command=self.salirPrograma) 
-        botonsalir.grid(row=1,column=5,sticky="e",padx=5,pady=6)
+        botoncrear=tk.Button(frameinf,text="Crear", command=self.Crear,activebackground="#00A750",activeforeground="#FFFFFF",width=8) 
+        botoncrear.grid(row=1,column=0,sticky="e",padx=7,pady=6)
+        botonleer=tk.Button(frameinf,text="Leer", command=self.leer, activebackground="#00A750",activeforeground="#FFFFFF",width=8) 
+        botonleer.grid(row=1,column=1,sticky="e",padx=7,pady=6)
+        botonactualiza=tk.Button(frameinf,text="Actualizar", command=self.actualizar, activebackground="#00A750",activeforeground="#FFFFFF",width=8) 
+        botonactualiza.grid(row=1,column=3,sticky="e",padx=7,pady=6)
+        botonborrar=tk.Button(frameinf,text="Limpiar", command=self.limpiarcampos,activebackground="#00A750",activeforeground="#FFFFFF",width=8) 
+        botonborrar.grid(row=1,column=4,sticky="e",padx=7,pady=6)
+        botonsalir=tk.Button(frameinf,text="Salir", command=self.salirPrograma,activebackground="#00A750",activeforeground="#FFFFFF",width=8) 
+        botonsalir.grid(row=1,column=5,sticky="e",padx=7,pady=6)
     def run_query(self,*args): 
+
         DB_HOST = 'localhost'
         DB_USER = 'root'
         DB_PASS = 'root'
@@ -138,15 +138,30 @@ class CreaVentana():
         self.ven2.title('Creacion Nuevo Codigo CUA')
         apellido=ttk.Label(self.ven2,text="Cod Funcionario: ")
         apellido.grid(row=0,column=0, sticky="e", padx=10,pady=7)
-        cuadroCodigofunc=ttk.Entry(self.ven2, textvariable=self.miCodigo_func)
-        cuadroCodigofunc.grid(row=0,column=1,padx=10, pady=7, sticky="w")
-        botonvalidar=ttk.Button(self.ven2,text="Validar Funcionario", command=self.Valida) 
-        botonvalidar.grid(row=1,column=0,sticky="e" ,padx=5,pady=6)
-        cuadroCodigofunc.focus()
         
-            
-    # Valida si el funcionario existe
-    def Valida(self):      
+        def escarvalido(new_text): # Funcion de Validacion de Caracteres ingresados
+            if len(new_text) > 8:
+                return False
+            checks = []
+            for i,char in enumerate(new_text):
+                if i in (6,):
+                    checks.append(char == "-")
+                elif i in (7,):
+                    checks.append(char in "ABCDEFGHIJKLMNOPQRSTUWVXYZ")
+                else:
+                    checks.append(char in "0123456789")
+             
+            self.miCodigo_func.set(new_text)
+            return all(checks)
+        
+        validatecommand=self.ven2.register(escarvalido)
+        cuadroCodigofunc=ttk.Entry(self.ven2, validate="key", validatecommand=(validatecommand,"%P"),width=8)
+        cuadroCodigofunc.grid(row=0,column=1,padx=10, pady=7, sticky="w")
+        botonvalidar=tk.Button(self.ven2,text="Validar Funcionario", command=self.Valida,activebackground="#00A750",activeforeground="#FFFFFF") 
+        botonvalidar.grid(row=1,column=1,sticky="e" ,padx=5,pady=6)
+        cuadroCodigofunc.focus() 
+    
+    def Valida(self):      # Valida si el funcionario existe
         noexiste=True
         conn = mysql.connector.connect(host=self.DB_HOST,user=self.DB_USER,password=self.DB_PASS,database=self.DB_NAME)
         cursor = conn.cursor()        
@@ -242,7 +257,7 @@ class CreaVentana():
             cuadroCodigofunc.config(state='disabled')
             cuadroCodigofunc.focus()
             # Ejecuta el boton 
-            botoncrear=ttk.Button(self.ven2,text="Grabar", command=self.Grabar)
+            botoncrear=tk.Button(self.ven2,text="Grabar", command=self.Grabar,activebackground="#00A750",activeforeground="#FFFFFF")
             botoncrear.grid(row=6,column=1,sticky="e",padx=5,pady=6)
             #-------Fin Combobox Departamento 
     
@@ -267,15 +282,13 @@ class CreaVentana():
         mayuscula=self.miNombre.get()
         self.miNombre.set(mayuscula.upper())    # Transforma nombre a Mayusculas
         datos=self.miGrado.get(),self.miNombre.get(),self.miCodigo_func.get(),self.miDepartamento.get(),self.miCua.get(),int(self.miStatus.get())
-        print (datos)
+        #print (datos)
         sql="INSERT INTO departamentos_cua (grado,apellido_nombre,codigo_fun,departamento,cua,estado) VALUES (%s,%s,%s,%s,%s,%s)" 
         actualizando=self.run_query(sql,datos)
         
         messagebox.showinfo("BBDD", "C.U.A generado con éxito "+ self.miCua.get())
         self.ven2.destroy()
-        
-        
-
+              
     def salirPrograma(self):
         valor=messagebox.askquestion("Salir", "Desea salir de la aplicacion?")
         if valor=="yes":
@@ -284,6 +297,8 @@ class CreaVentana():
 
 if __name__ == '__main__':
     ventana=tk.Tk()
+    #estilo = ttk.Style(ventana)
+    #estilo.theme_use(xpnative)
     retorno=CreaVentana(ventana)
     ventana.mainloop()
 
