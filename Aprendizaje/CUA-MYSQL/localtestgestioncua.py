@@ -1,3 +1,5 @@
+##cambiar Host
+
 import tkinter as tk
 from tkinter import Button, Canvas, Tk, messagebox,ttk,Toplevel, PhotoImage,Label
 from tkinter.constants import ANCHOR, NE, RIGHT
