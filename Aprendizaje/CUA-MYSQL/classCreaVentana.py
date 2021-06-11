@@ -57,6 +57,7 @@ class CreaVentana():
         #    micursor=miconexion.cursor()
         #    micursor.execute("SELECT * FROM departamentos_cua WHERE codigo_fun=" +self.miCodigo_func.get())
         #    elusuario=micursor.fetchall()
+            
             elusuario=run_query(sql)
             for usuario in elusuario:
                 self.miId.set(usuario[0])
@@ -76,7 +77,7 @@ class CreaVentana():
             datos=self.miId.get(),self.miGrado.get(),self.miNombre.get(),self.miCodigo_func.get(),self.miDepartamento.get(),self.miCua.get(),self.miStatus.get()
             #micursor.execute("UPDATE departamentos_cua SET Id=%s,grado=%s,apellido_nombre=%s,codigo_fun=%s,departamento=%s,cua=%s,estado=%s"+ 
             #"WHERE Id="+self.miId.get(),(datos))
-            sql="UPDATE departamentos_cua SET Id=%s,grado=%s,apellido_nombre=%s,codigo_fun=%s,departamento=%s,cua=%s,estado=%s"+"WHERE Id="+self.miId.get(),(datos)
+            sql="UPDATE departamentos_cua SET Id=%s,grado=%s,apellido_nombre=%s,codigo_fun=%s,departamento=%s,cua=%s,estado=%s"+"WHERE Id="+self.miId.get()%datos
             actualizando=run_query(sql)
             #miconexion.commit()
             messagebox.showinfo("BBDD", "Registro Actualizado con éxito")
