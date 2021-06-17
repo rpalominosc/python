@@ -3,11 +3,13 @@
 import tkinter as tk
 from tkinter import Button, Canvas, Tk, messagebox,ttk,Toplevel, PhotoImage,Label
 from tkinter.constants import ANCHOR, NE, RIGHT
-from PIL import Image, ImageTk
+import PIL
+from PIL import Image
+from PIL import ImageTk
 import mysql.connector
 import random
 
-
+# encoding: utf-8
 
 class CreaVentana():
     
@@ -25,7 +27,7 @@ class CreaVentana():
         self.miStatus=tk.StringVar()
         #--------------Pantalla Base------------------
         #principal=tk.Tk()
-        self.principal.title("Administración C.U.A")
+        self.principal.title("Administracion C.U.A")
         self.principal.resizable(True,True)
 
         # Centra la Pantalla
@@ -43,10 +45,13 @@ class CreaVentana():
         DB_PASS = 'secret'
         DB_NAME = 'cua'
 
-        #imagen=PhotoImage(file="logo_limpio.png")
-        imagen=ImageTk.PhotoImage(Image.open("logo_limpio.png"))
-        self.principal.Canvas.create_image(self.principal,20,20,ANCHOR=NE,Image=imagen)        
-
+        self.imagen=Image.open("logo_limpio.png")
+        #resize_image = imagen.resize((50, 50))
+        self.imagen=self.imagen.resize((150,150),Image.ANTIALIAS)
+        self.imagen=ImageTk.PhotoImage(self.imagen)
+        imagen_2=Label(self.principal, image=self.imagen,bg='#006038')
+        imagen_2.place(x=0, y=0,relwidth = 0.2, relheight = 0.6)     
+        
     def dibuja_pantalla(self):
 
     #-----------------Segundo frame despliegue de Campos -------------------
@@ -195,15 +200,9 @@ class CreaVentana():
         cuadroCodigofunc.focus() 
     
     def Valida(self):      # Valida si el funcionario existe
-        noexiste=True
-        #conn = mysql.connector.connect(host=self.DB_HOST,user=self.DB_USER,password=self.DB_PASS,port=self.DB_PORT,database=self.DB_NAME)
-        #cursor = conn.cursor()        
+        noexiste=True    
         sql="SELECT * FROM departamentos_cua WHERE codigo_fun="+"'"+str(self.miCodigo_func.get())+"'"
-        #cursor.execute(sql)
         datos=self.run_query(sql)
-        #cursor.fetchall()
-        #datos.fetchall()
-        #row_count = cursor.rowcount
         row_count = len(datos)
         if row_count != 0:     
             messagebox.showinfo("Error", "Codigo Funcionario ya existe en la BBDD")
@@ -237,7 +236,7 @@ class CreaVentana():
     def ComboVentanaGrado(self):
             
             #redibuja la pantalla
-            quien=tk.Label(self.ven2,text="Nombre ",bg='#006038',fg='white')
+            quien=tk.Label(self.ven2,text="Nombre" ,bg='#006038',fg='white')
             quien.grid(row=1,column=0, sticky="e", padx=10,pady=7)
             cuadronombre=tk.Entry(self.ven2, textvariable=self.miNombre, width=40)
             cuadronombre.grid(row=1,column=1, padx=10, pady=7, sticky="w")
@@ -257,15 +256,7 @@ class CreaVentana():
             valor =   self.chkstatus.get()
             self.miStatus.set(valor)           
 
-            #self.miStatus.set(int(1))
-            #texto.grid(row=5,column=0, sticky="e", padx=10,pady=7)
-            #cuadrostatus=ttk.Entry(self.ven2, textvariable=self.miStatus)
-            #cuadrostatus.grid(row=5,column=1, padx=10, pady=7, sticky="w")
             #------Combobox para Grado -------------------  
-            #miconexion = mysql.connector.connect(host=self.DB_HOST,user=self.DB_USER,password=self.DB_PASS,port=self.DB_PORT,database=self.DB_NAME)
-            #micursor=miconexion.cursor() 
-            #micursor.execute("SELECT * FROM grados" )
-            #grados=micursor.fetchall()
             sql="SELECT * FROM grados"
             grados=self.run_query(sql)
             lista1=[]
@@ -282,18 +273,12 @@ class CreaVentana():
             
     def ComboVentanaDepto(self):
             #------Combobox para Departamento -------------------  
-            #miconexion = mysql.connector.connect(host=self.DB_HOST,user=self.DB_USER,password=self.DB_PASS,port=self.DB_PORT,database=self.DB_NAME)
-            #micursor=miconexion.cursor() 
-            #micursor.execute("SELECT * FROM departamentos_reg " )
-            #departamentos=micursor.fetchall()
             sql= "SELECT * FROM departamentos_reg "
             departamentos=self.run_query(sql)
             estedepto=tk.StringVar()
             lista=[]
             for indice,item in departamentos:
                 lista.append(str(item))
-            #micursor.close()                 # Cerrar el cursor 
-            #miconexion.close()  
             combodepartamento=ttk.Combobox(self.ven2, width=150,values=lista,textvariable=estedepto)
             combodepartamento.grid(row=3,column=1, padx=10, pady=7, sticky="w")
             combodepartamento.config(justify="left",width=40)
