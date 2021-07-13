@@ -4,8 +4,7 @@ import tkinter as tk
 from tkinter import Button, Canvas, Tk, messagebox,ttk,Toplevel, PhotoImage,Label
 from tkinter.constants import ANCHOR, NE, RIGHT
 import PIL
-from PIL import Image
-from PIL import ImageTk
+from PIL import Image, ImageTk
 import mysql.connector
 import random
 
@@ -29,6 +28,9 @@ class CreaVentana():
         #principal=tk.Tk()
         self.principal.title("Administracion C.U.A")
         self.principal.resizable(True,True)
+        framesup=tk.Frame(self.principal)
+        framesup.config(width=4096,height=300,bg='#006038')
+        #framesup.pack()
 
         # Centra la Pantalla
         ancho_ventana = 900
@@ -42,22 +44,24 @@ class CreaVentana():
         DB_HOST = '10.25.10.247'
         DB_USER = 'root'
         DB_PORT = '33060'
-        DB_PASS = 'secret'
+        DB_PASS = 'root'
         DB_NAME = 'cua'
 
-        self.imagen=Image.open("logo_limpio.png")
-        #resize_image = imagen.resize((50, 50))
+        # Despliega Logo
+        self.imagen=Image.open('logolimpio.png')
         self.imagen=self.imagen.resize((150,150),Image.ANTIALIAS)
         self.imagen=ImageTk.PhotoImage(self.imagen)
         imagen_2=Label(self.principal, image=self.imagen,bg='#006038')
-        imagen_2.place(x=0, y=0,relwidth = 0.2, relheight = 0.6)     
+        imagen_2.place(x=0, y=0,relwidth = 0.2, relheight = 0.6)
         
     def dibuja_pantalla(self):
 
     #-----------------Segundo frame despliegue de Campos -------------------
         miframe=tk.Frame(self.principal)
-        miframe.config(width=4096,height=1280,bg='#006038')
+        miframe.config(width=4096,height=1080,bg='#006038')
         miframe.pack()
+
+        
     #-----------------Genera  los rotulos de texto----------
         apellido=tk.Label(miframe,text="Cod Funcionario: ",bg='#006038',fg='white')
         apellido.grid(row=0,column=0, sticky="e", padx=10,pady=7)
@@ -101,12 +105,13 @@ class CreaVentana():
         botonborrar.grid(row=1,column=4,sticky="e",padx=7,pady=6)
         botonsalir=tk.Button(frameinf,text="Salir", command=self.salirPrograma,activebackground="#00A750",activeforeground="#FFFFFF",width=8,bg='#006038',fg='white') 
         botonsalir.grid(row=1,column=5,sticky="e",padx=7,pady=6)
+    
     def run_query(self,*args): 
 
         DB_HOST = '10.25.10.247'
         DB_USER = 'root'
         DB_PORT = '33060'
-        DB_PASS = 'secret'
+        DB_PASS = 'root'
         DB_NAME = 'cua'
 
         conn = mysql.connector.connect(host=DB_HOST,user=DB_USER,password=DB_PASS,port=DB_PORT,database=DB_NAME) # Conectar a la base de datos 
@@ -304,11 +309,7 @@ class CreaVentana():
             digito_generado = random.randint(1,9)
             cua_generado=str(numero_generado)+"-"+str(digito_generado)
             self.miCua.set(cua_generado)
-            #conn = mysql.connector.connect(host=self.DB_HOST,user=self.DB_USER,password=self.DB_PASS,port=self.DB_PORT,database=self.DB_NAME) 
-            #cursor=conn.cursor() 
             sql="SELECT * FROM departamentos_cua WHERE cua='%s'" % cua_generado
-            #cursor.execute(sql)
-            #elregistro=cursor.fetchall()
             datos=self.run_query(sql)
             row_count = len(datos)
             if row_count == 0:    
@@ -334,11 +335,7 @@ class CreaVentana():
 
 if __name__ == '__main__':
 
-    #p=CreaVentana()
-    #p.dibuja_pantalla()   
     principal=tk.Tk()
-    #estilo = ttk.Style(principal)
-    #estilo.theme_use("winnative")
     retorno=CreaVentana(principal)
     retorno.dibuja_pantalla()
     principal.mainloop()
