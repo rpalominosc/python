@@ -1,0 +1,13 @@
+{% extends "admin/base.html" %}
+
+{% block title %}{{ title }} | {{ site_title|default:_('Sitio Administración CUA') }}{% endblock %}
+{% block branding %}
+<h1 id="site-name"><a href="{% url 'admin:index' %}">Administracion C.U.A.</a></h1>
+{% endblock %}
+
+{% block nav-global %}{% endblock %}
+
+{% load staticfiles %}
+{% block extrastyle %}
+    <link rel="stylesheet" href="{%static 'base.css' %}">
+{% endblock %}

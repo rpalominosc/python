@@ -1,0 +1,9 @@
+#!/usr/bin/env xdg-open
+[Desktop Entry]
+Name=WatchGuard System Manager 11.9.3
+Exec=env WINEPREFIX="/home/rodrigo/.wine" wine-stable C:\\\\windows\\\\command\\\\start.exe /Unix /home/rodrigo/.wine/dosdevices/c:/ProgramData/Microsoft/Windows/Start\\ Menu/Programs/WatchGuard\\ System\\ Manager\\ 11.9.3/WatchGuard\\ System\\ Manager\\ 11.9.3.lnk
+Type=Application
+StartupNotify=true
+Path=/home/rodrigo/.wine/dosdevices/c:/Program Files (x86)/WatchGuard/wsm11/wsm/bin
+Icon=EAF2_AppMngr.0
+StartupWMClass=appmngr.exe

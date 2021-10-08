@@ -1,0 +1,8 @@
+[Desktop Entry]
+Name=Aprendiendo a leer con Bartolo
+Exec=env WINEPREFIX="/home/rodrigo/.wine" wine-stable C:\\\\windows\\\\command\\\\start.exe /Unix /home/rodrigo/.wine/dosdevices/c:/users/Public/Escritorio/Aprendiendo\\ a\\ leer\\ con\\ Bartolo.lnk
+Type=Application
+StartupNotify=true
+Path=/home/rodrigo/.wine/dosdevices/c:/Program Files (x86)/Imactiva/Aprendiendo a leer con Bartolo
+Icon=4880_Aprendiendo a leer con Bartolo.0
+StartupWMClass=aprendiendo a leer con bartolo.exe

@@ -1,0 +1,27 @@
+1605547884194	Sync.SyncScheduler	DEBUG	Next sync in 90000 ms. (why=schedule)
+1605547991269	Sync.Service	DEBUG	User-Agent: Firefox/82.0.3 (Linux x86_64) FxSync/1.84.0.20201108180448.desktop
+1605547991345	FirefoxAccounts	INFO	Polling device commands.
+1605547991345	Sync.Service	INFO	Starting sync at 2020-11-16 17:33:11 in browser session UxEPbSS6mw0W
+1605547991346	Sync.SyncScheduler	DEBUG	Clearing sync triggers and the global score.
+1605547991520	Sync.Status	INFO	Resetting Status.
+1605547991520	Sync.Status	DEBUG	Status.service: success.status_ok => success.status_ok
+1605547991524	FirefoxAccounts	DEBUG	FxAccountsProfileClient: Requested profile
+1605547991524	FirefoxAccounts	DEBUG	getOAuthToken enter
+1605547991525	FirefoxAccounts	TRACE	getCachedToken returning cached token
+1605547991525	FirefoxAccounts	DEBUG	getOAuthToken returning a cached token
+1605547991702	Services.Common.RESTRequest	DEBUG	GET request to https://profile.accounts.firefox.com/v1/profile
+1605548002496	Services.Common.RESTRequest	DEBUG	GET request to https://api.accounts.firefox.com/v1/account/device/commands?index=0
+1605548003011	Services.Common.RESTRequest	DEBUG	GET https://profile.accounts.firefox.com/v1/profile 304
+1605548003602	Services.Common.RESTRequest	DEBUG	GET https://api.accounts.firefox.com/v1/account/device/commands?index=0 200
+1605548003602	Hawk	DEBUG	(Response) /account/device/commands?index=0: code: 200 - Status text: OK
+1605548003602	Hawk	DEBUG	Clock offset vs https://api.accounts.firefox.com/v1: 119398
+1605548003604	Sync.Resource	DEBUG	GET success 200 https://sync-1-us-west1-g.sync.services.mozilla.com/1.5/162991965/info/collections
+1605548003604	Sync.Service	DEBUG	Fetching server configuration: https://sync-1-us-west1-g.sync.services.mozilla.com/1.5/162991965/info/configuration
+1605548003605	FirefoxAccounts	TRACE	not checking freshness of profile as it remains recent
+1605548003613	Sync.Resource	WARN	GET request to https://sync-1-us-west1-g.sync.services.mozilla.com/1.5/162991965/info/configuration failed: [Exception... "The connection was established, but no data was ever received"  nsresult: "0x804b0014 (NS_ERROR_NET_RESET)"  location: "<unknown>"  data: no] No traceback available
+1605548003613	Sync.Service	WARN	Failed to fetch info/configuration: [Exception... "The connection was established, but no data was ever received"  nsresult: "0x804b0014 (NS_ERROR_NET_RESET)"  location: "<unknown>"  data: no] No traceback available
+1605548003613	Sync.Status	DEBUG	Status.sync: success.sync => error.login.reason.network
+1605548003613	Sync.Status	DEBUG	Status.service: success.status_ok => error.sync.failed
+1605548003613	Sync.ErrorHandler	ERROR	Sync encountered an error: Error: Aborting sync, remote setup failed(resource://services-sync/stages/enginesync.js:95:13) JS Stack trace: sync@enginesync.js:95:13
+1605548003614	Sync.SyncScheduler	DEBUG	Next sync in 600000 ms. (why=reschedule)
+1605548003616	Sync.Service	DEBUG	Exception calling anonymous function: Error: Aborting sync, remote setup failed(resource://services-sync/stages/enginesync.js:95:13) JS Stack trace: sync@enginesync.js:95:13

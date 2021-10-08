@@ -1,0 +1,9 @@
+#!/usr/bin/env xdg-open
+[Desktop Entry]
+Name=BigAnt 5
+Exec=env WINEPREFIX="/home/rodrigo/.wine" wine-stable C:\\\\windows\\\\command\\\\start.exe /Unix /home/rodrigo/.wine/dosdevices/c:/ProgramData/Microsoft/Windows/Start\\ Menu/Programs/BigAnt\\ 5/BigAnt\\ 5.lnk
+Type=Application
+StartupNotify=true
+Path=/home/rodrigo/.wine/dosdevices/c:/Program Files (x86)/BigAnt5/Client/TBAppLdrService
+Icon=14C5_BigAnt5.0
+StartupWMClass=bigant5.exe
