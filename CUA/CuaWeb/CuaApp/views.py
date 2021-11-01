@@ -11,8 +11,9 @@ def AgregaCua (request):
         miformulario = GeneraCua(request.POST)
 
         if miformulario.is_valid():
-            
             infForm = miformulario.cleaned_data
+        #    def 
+
             print (infForm['nombreapellido'], infForm['codigofun'])
             return render (request, "gracias.html")
     else:
