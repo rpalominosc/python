@@ -8,13 +8,14 @@ class Identificacion(models.Model):
     cua = models.CharField(unique=True, max_length=10)
     grado = models.ForeignKey('Grados', models.DO_NOTHING, db_column='grado')
     estado = models.ForeignKey('Estado', models.DO_NOTHING, db_column='estado', blank=True, null=True)
-    departamento = models.ForeignKey('Departamento', models.DO_NOTHING)
+    departamento = models.ForeignKey('Departamento', models.DO_NOTHING, db_column='departamento')
 
     class Meta:
         #managed = False
         db_table = 'funcionario'
         verbose_name = "Identificación"
         verbose_name_plural = "Identificaciones"
+
 
     def __str__(self):
         return  "%s %s %s %s %s %s" % (self.nombreapellido, self.codigofun, self.cua, self.departamento,self.grado,self.estado)
@@ -25,6 +26,7 @@ class Departamento(models.Model):
     descripcion = models.CharField(max_length=100, verbose_name="Departamento")
     
     class Meta:
+        ordering = ['id']
         db_table = 'departamento'
         verbose_name= 'departamento'
         verbose_name_plural= 'departamentos'

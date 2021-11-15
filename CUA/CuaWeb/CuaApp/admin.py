@@ -8,7 +8,13 @@ from CuaApp.models import Identificacion,Grados,Departamento,Estado
 #admin.site.register(Grados)
 #admin.site.register(Estado)
 
+admin.site.site_header = 'DIPOLCAR'
+admin.site.index_title = 'Administración C.U.A'
+admin.site.site_title = 'C.U.A - Dipolcar'
+admin.ModelAdmin.actions_on_top = False
 admin.site.empty_value_display = '(NO encontrado)'
+
+
 class IdentificacionAdmin(admin.ModelAdmin):
     list_display = ['nombreapellido','codigofun', 'cua', 'departamento', 'grado', 'estado',]
     search_fields = ('nombreapellido', 'codigofun', 'cua', )
@@ -21,7 +27,7 @@ class DepartamentoAdmin(admin.ModelAdmin):
     
 class GradosAdmin(admin.ModelAdmin):
     list_display = ('id', 'descgrado',)
-    
+           
 
 class EstadoAdmin(admin.ModelAdmin):
     list_display= ('id' , 'estado')
@@ -33,7 +39,8 @@ class IdentDept(admin.ModelAdmin):
     search_fields = ('nombreapellido', 'codigofun', 'cua', )
     list_per_page = 20
     
-    list_filter = ['estado',]
+    list_filter = ['estado','grado']
+    readonly_fields = ['codigofun', 'cua',]
     
     @admin.display(description='Estado')
     def trae_estado(self,obj):
