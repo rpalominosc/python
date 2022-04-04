@@ -314,9 +314,9 @@ class CreaVentana():
             datos=self.run_query(sql)
             row_count = len(datos)
             if row_count == 0:    
-                existe=True
+                existe=False    
             else:
-                existe=False
+                existe=True
         self.miCua.set(cua_generado)
         mayuscula=self.miNombre.get()
         self.miNombre.set(mayuscula.upper())    # Transforma nombre a Mayusculas
