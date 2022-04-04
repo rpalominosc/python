@@ -3,8 +3,8 @@ from django.db import models
 # Create your models here.
 class Identificacion(models.Model):
     managed = True
-    nombreapellido = models.CharField(max_length=400,help_text="Ingrese APELLIDOS + NOMBRES",verbose_name="Nombre - Apellido",)
-    codigofun = models.CharField(unique=True, max_length=10, verbose_name="Cod.Funcionario")
+    nombreapellido = models.CharField(max_length=400,help_text="Ingrese APELLIDOS + NOMBRES",)
+    codigofun = models.CharField(unique=True, max_length=10, verbose_name="Cod.Funcionario", help_text='Ingrese en formato 999999-X',)
     cua = models.CharField(unique=True, max_length=10)
     grado = models.ForeignKey('Grados', models.DO_NOTHING, db_column='grado')
     estado = models.ForeignKey('Estado', models.DO_NOTHING, db_column='estado', blank=True, null=True)

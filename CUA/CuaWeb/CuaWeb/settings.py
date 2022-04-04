@@ -82,8 +82,8 @@ DATABASES = {
         'NAME': 'cua_db',
         'USER': 'root',
         'PASSWORD': 'root',
-        'HOST': 'localhost',
-        'PORT': '3306',
+        'HOST': '10.25.10.247',
+        'PORT': '33060',
     }
 }
 

@@ -275,9 +275,9 @@ class CreaVentana():
             elregistro=cursor.fetchall()
             row_count = cursor.rowcount
             if row_count == 0:    
-                existe=True
-            else:
                 existe=False
+            else:
+                existe=True
         self.miCua.set(cua_generado)
         mayuscula=self.miNombre.get()
         self.miNombre.set(mayuscula.upper())    # Transforma nombre a Mayusculas

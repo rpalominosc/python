@@ -6,12 +6,12 @@ from django.urls import reverse
 from CuaApp.forms import GeneraCua
 
 def AgregaCua (request):
-
+    
     if request.method == "POST":
         miformulario = GeneraCua(request.POST)
 
         if miformulario.is_valid():
-            infForm = miformulario.cleaned_data
+            infForm = miformulario.cleaned_data['codigofun']
         #    def 
 
             print (infForm['nombreapellido'], infForm['codigofun'])
@@ -19,7 +19,7 @@ def AgregaCua (request):
     else:
         miformulario = GeneraCua()
     
-    return render (request, "identificac.html", {"form":miformulario})
+    return render (request, "identificac.html", {'form':miformulario})
 
 #        model = Identificacion
 #        fields = '__all__'
