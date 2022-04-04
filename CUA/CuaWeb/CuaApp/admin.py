@@ -32,7 +32,7 @@ class GradosAdmin(admin.ModelAdmin):
 class EstadoAdmin(admin.ModelAdmin):
     list_display= ('id' , 'estado')
 
-@admin.display(ordering='identificacion__estado')
+# @admin.display(ordering='identificacion__estado')
 class IdentDept(admin.ModelAdmin):
     #model = Identificacion
     list_display = [ 'nombreapellido','codigofun','cua','trae_grado','trae_dep','trae_estado',]
@@ -42,15 +42,15 @@ class IdentDept(admin.ModelAdmin):
     list_filter = ['estado','grado']
     readonly_fields = ['codigofun', 'cua',]
     
-    @admin.display(description='Estado')
+#    @admin.display(description='Estado')
     def trae_estado(self,obj):
         return obj.estado.estado
 
-    @admin.display(description='Departamento')    
+#    @admin.display(description='Departamento')    
     def trae_dep(self,obj):
         return obj.departamento.descripcion
     
-    @admin.display(description='Grado')
+#    @admin.display(description='Grado')
     def trae_grado(self,obj):
         return obj.grado.descgrado
     

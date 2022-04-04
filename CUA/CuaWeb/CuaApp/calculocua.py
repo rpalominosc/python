@@ -1,3 +1,4 @@
+
 def datos_sanitizados(self):
         datos = ['nombreapellido', 'codigofun','cua,''grado','departamento','estado']
 
