@@ -1,0 +1,35 @@
+{% extends 'base_generica.html' %}
+
+
+{% block content %}
+<h2>Ingreso de usuario</h2>
+<form method="post">
+  {% csrf_token %}
+  <form id="login-form" method="post" action="{% url 'login' %}">
+    {% csrf_token %}
+    <table class="table">
+        <tr>
+            <td><label for="id_username">Usuario</label></td>
+            <td><input id="id_username" name="username" 
+                       type="text" class="form-control"></td>
+        </tr>
+        <tr>
+            <td><label for="id_password">Contraseña</label></td>
+            <td><input id="id_password" name="password" 
+                       type="password" class="form-control"></td>
+        </tr>
+    </table>
+    {% if form.errors %}
+        <p class=" label label-danger">
+            Por favor, introduzca un nombre de usuario y clave correctos. Observe que ambos campos pueden ser sensibles a mayúsculas.
+        </p>
+    {% endif %}
+
+    <input type="submit" value="Login" 
+           class="btn btn-primary pull-right" />
+    <input type="hidden" name="next" value="{{ next }}" />
+</form>
+
+  
+
+{% endblock content %}

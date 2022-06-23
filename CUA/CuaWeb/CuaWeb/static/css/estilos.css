@@ -1,0 +1,112 @@
+body {
+     background-color: #094620;
+     background-image: url('../img/95_PRESENTACION43.png'); 
+     background-repeat: no-repeat;
+     }
+
+  
+.contenedor {
+  font-family: arial, sans-serif;
+  margin: 300px;
+  padding: 10px;
+   
+  }
+
+.container {
+    font-family: arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+    display: flex;
+    flex-wrap: wrap;  
+}
+.inicial {
+    background-color: transparent;
+}
+
+.login {
+    background: #094620;
+    display: -webkit-box;
+    padding: 10px;
+    margin-bottom: 50px;
+    border: 3px solid #fff;
+    color: white;
+    font-size: 20px;
+    text-align: center;
+    position: relative;
+  }
+
+
+.flex {
+    background: #094620;
+    padding: 10px;
+    margin-bottom: 50px;
+    border: 3px solid #fff;
+    color: white;
+    font-size: 20px;
+    text-align: center;
+    position: relative;
+  }
+
+  .flex1 {
+    flex-basis: -webkit-fit-content;
+    flex-basis: -moz-fit-content;
+    flex-basis: fit-content;
+  }
+  
+  .flex1:after {
+    content: 'fit-content';
+  }
+  .flex2 {
+    flex-basis: -webkit-max-content;
+    flex-basis: -moz-max-content;
+    flex-basis: max-content;
+  }
+
+  .flex6 {
+    flex-basis: -webkit-fill-available;
+    flex-basis: -moz-available;
+    flex-basis: fill;
+  }
+  
+  .flex6:after {
+    content: 'fill/-webkit-fill-available/-moz-available';
+  }
+.row {
+    background-color: #094620;
+}
+.col {
+    background-color: #094620;
+}
+
+
+h1  {
+    color: #fff;
+    }
+h2 {
+    color: #2c1c77;
+}
+
+div {
+    font-size:20px ;
+    height: 500px;
+    width: 400px;
+    margin: 20px 30px;
+    padding:30px;
+    border: 5px solid #fff;
+    background: #160d63;
+    float: left;
+    
+}
+
+div p {
+    font-size:1em ;
+}
+
+.caja2 {
+    position: relative;
+    top: 0px;
+    bottom: 0px;
+    right: 0px;
+    left: 200px;
+}

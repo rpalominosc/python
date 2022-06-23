@@ -57,6 +57,7 @@ TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS' : [os.path.join(BASE_DIR, 'CuaWeb/templates/')],
+        'DIRS'  : [BASE_DIR , 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -81,8 +82,9 @@ DATABASES = {
         'NAME': 'cua_db',
         'USER': 'root',
         'PASSWORD': 'root',
-        'HOST': '10.25.10.247',
-        'PORT': '33060',
+    #    'HOST': '10.25.10.247',
+        'HOST': 'localhost',
+        'PORT': '3306',
     }
 }
 
@@ -129,3 +131,5 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 
 DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
+
+LOGIN_REDIRECT_URL="/CuaApp"
