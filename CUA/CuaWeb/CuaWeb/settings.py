@@ -56,12 +56,7 @@ ROOT_URLCONF = 'CuaWeb.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-<<<<<<< HEAD
-        'DIRS' : [os.path.join(BASE_DIR, 'CuaWeb/templates/')],
-        'DIRS'  : [BASE_DIR , 'templates'],
-=======
         'DIRS' : [os.path.join(BASE_DIR, 'templates')],
->>>>>>> 6ffccad347137c1f5d3f8dc9cba285b9d42b3be8
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
