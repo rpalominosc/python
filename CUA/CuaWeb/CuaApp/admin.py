@@ -1,3 +1,4 @@
+
 from django.contrib import admin
 from CuaApp.models import Identificacion,Grados,Departamento,Estado
 

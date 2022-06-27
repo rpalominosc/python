@@ -14,15 +14,30 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
+from django.views.generic import RedirectView
+from django.conf.urls import url
 from django.urls import path, include
+from httplib2 import RedirectLimit
 from CuaApp import views
+from django.contrib.auth import views as auth_views
+#
+# from CuaWeb import CuaApp
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('identificac/',views.AgregaCua),
+    path('accounts/', include('django.contrib.auth.urls')),    
 ]
-
-# Use static() to add url mapping to serve static files during development (only)
+urlpatterns += [
+    url(r'^CuaApp/', include('CuaApp.urls')),
+]
 from django.conf import settings
 from django.conf.urls.static import static
 
+urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+#Add Django site authentication urls (for login, logout, password management)
+urlpatterns += [
+    
+]
+urlpatterns += [
+    path('login/', auth_views.LoginView.as_view(), name='login'),
+]
