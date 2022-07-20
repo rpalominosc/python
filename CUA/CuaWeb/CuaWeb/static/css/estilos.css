@@ -1,10 +1,15 @@
-body {
+header {
      background-color: #094620;
      background-image: url('../img/95_PRESENTACION43.png'); 
+     background-position: center;
+     background-size: cover ;
      background-repeat: no-repeat;
      }
 
-  
+.img-logo{
+  width: 40px;
+}
+
 .contenedor {
   font-family: arial, sans-serif;
   margin: 300px;
